@@ -1,7 +1,6 @@
 
 # Agent server for GraphAI
-
-Python Agent server for [GraphAI](https://github.com/receptron/graphai/)
+Sample implementation Python Agent server for [GraphAI](https://github.com/receptron/graphai/)
 
 ## run server
 
