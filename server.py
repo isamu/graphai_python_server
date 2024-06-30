@@ -1,8 +1,12 @@
+import asyncio
+import json
+
 from typing import Any
 
 from fastapi import Body, FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 
 import uvicorn
 
@@ -65,6 +69,17 @@ def copy(payload: Any = Body(None)):
     
     return JSONResponse(content=inputs[0])
 
+@app.post("/agents/streamAgent")
+async def stream_json_example():
+    async def generate_json_data():
+        for i in range(10):
+            await asyncio.sleep(1.0)
+            yield f"{i}\n"
+
+        yield "___END___";
+        yield "0123456789";
+
+    return StreamingResponse(content=generate_json_data(), media_type="text/event-stream")
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000, log_level="debug")
